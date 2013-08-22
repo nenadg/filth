@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Install-ServerConfiguration";
+    Layout = "~/views/Shared/_Install.cshtml";
+    
+}
+
+@model filth1.models.ServerConfiguration
+
+@using (Html.BeginForm())
+        {
+
+        <div class="row">
+            <div>
+                <h1>+</h1>
+            </div>
+            <fieldset class="col-lg-6">
+                <legend>Server details</legend>
+                <div class="editor-field">
+                    @Html.CheckBoxFor(model => model.Live) @Html.LabelFor(model => model.Live)  
+                </div>
+                <div class="editor-label">
+                    <label> @Html.LabelFor(model => model.ServerName)</label>
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.ServerName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ServerName)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Catalog)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Catalog, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Catalog)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Username)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Username)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Password)
+                </div>
+                <div class="editor-field">
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+                 
+                <div class="editor-label">
+                    <br />
+                    <input type="button" value="Create connection" class="btn btn-default" id="submit-server-configuration" />
+                </div>
+            </fieldset> 
+            <div class="col-lg-6">
+                <div class="editor-label comments error">   
+                </div>
+            </div>
+        </div>
+ 
+        }

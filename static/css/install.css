@@ -1,0 +1,7 @@
+﻿.editor-label, .editor-field { margin: 5px; font-weight: normal; }
+    .editor-label label { font-weight: normal !important; font-size: 15px; }
+    .comments { color: green; font-size: 11px; padding-left: 8px; }
+.error { color: red; }
+.field-validation-error { padding: 0px; margin:0px; color: red; display: inline; }
+.input-validation-error { border-color: red; background-color: #fcfcfc; }
+.progress { position: absolute; left: 0; top: 0; color: red; height: 5px; }

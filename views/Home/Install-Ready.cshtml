@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Install-Ready";
+    Layout = "~/views/Shared/_Install.cshtml";
+}
+
+@model filth1.models.User
+
+@using (Html.BeginForm("", "?install=4", FormMethod.Post, new { @id = "loginform", autocomplete = "odd" }))
+{
+
+    <div class="row">
+        <div>
+            <h1>:}</h1>
+        </div>
+        <fieldset class="col-lg-6">
+            <legend>Ready.</legend>
+            <p class="help-block">Your brand new site is now configured. You may like to login, just to do something with it.</p>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Username)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Username)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Password)
+            </div>
+            <div class="editor-field">
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+            <br />
+            <p class="help-block comments">And no, there is no 'remember me' checkbox, you're logged in by default, until you log out.</p>
+
+            <div class="editor-label">
+                <br />
+                <input type="button" value="Login" class="btn btn-success" id="submit-user-login" />
+            </div>
+        </fieldset>
+        <div class="col-lg-6">
+            <div class="editor-label comments error">
+            </div>
+        </div>
+    </div>
+}
+

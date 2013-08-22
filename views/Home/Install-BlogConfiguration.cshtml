@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Install-BlogConfiguration";
+    Layout = "~/views/Shared/_Install.cshtml";
+}
+
+@model filth1.models.Blog
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div>
+            <h1>+</h1>
+        </div>
+        <fieldset class="col-lg-6">
+            <legend>Blog setup</legend>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Title)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.BloggerName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.BloggerName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BloggerName)
+            </div>
+
+            <div class="editor-label">
+                <br />
+                <input type="button" value="Create site" class="btn btn-default" id="submit-blog-configuration" />
+            </div>
+        </fieldset>
+        <div class="col-lg-6">
+                <div class="editor-label comments error">   
+                </div>
+            </div>
+    </div>
+   
+}
+
