@@ -26,7 +26,8 @@ namespace filth.controllers
         public ActionResult Index(int? install)
         {
             ConnectionStringState state = _configuration.CheckConnection();
-
+            IFilthConfiguration la = new FilthConfiguration();
+            //ConnectionStringState state = la.CheckConnection();
 
             if (state == ConnectionStringState.Present || state == ConnectionStringState.Invalid)
                 if (install == 2)

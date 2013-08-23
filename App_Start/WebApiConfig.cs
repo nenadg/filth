@@ -10,7 +10,6 @@ namespace filth
     {
         public static void Register(HttpConfiguration config)
         {
-            
             config.Services.RemoveAll(
             typeof(System.Web.Http.Validation.ModelValidatorProvider),
             v => v is System.Web.Http.Validation.Providers.InvalidModelValidatorProvider);

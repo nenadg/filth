@@ -118,7 +118,6 @@
     <Compile Include="controllers\AuthController.cs" />
     <Compile Include="controllers\InstallController.cs" />
     <Compile Include="controllers\HomeController.cs" />
-    <Compile Include="controllers\smeceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -140,7 +139,6 @@
     <Content Include="static\js\bootstrap.min.js" />
     <Content Include="static\js\configuration.js" />
     <Content Include="static\js\install.js" />
-    <Content Include="static\js\jquery-1.10.2.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
