@@ -20,6 +20,7 @@ namespace filth.controllers
             _configuration = _iconfiguration;
         }
 
+        [HttpPost]
         public HttpResponseMessage Login(User user)
         {
             var response = new HttpResponseMessage();
@@ -33,8 +34,8 @@ namespace filth.controllers
                     val.MaxAge = TimeSpan.FromMinutes(60);
                     val.Domain = "/";
 
-                    response = new HttpResponseMessage(HttpStatusCode.Moved);
-                    response.Headers.Location = new Uri( "/profile");
+                    response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Headers.Location = new Uri(Request.RequestUri.Authority + "/profile");
                     response.Headers.AddCookies(new System.Net.Http.Headers.CookieHeaderValue[] { val });
 
                 } else

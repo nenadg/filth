@@ -30,14 +30,15 @@ namespace filth.controllers
                 case ConnectionStringState.Absent:
                     if (ModelState.IsValid)
                     {
-                        _configuration.CreateConnectionString(serverConfiguration.Live, serverConfiguration.ServerName, serverConfiguration.Catalog, serverConfiguration.Username, serverConfiguration.Password, System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
-                        response = new HttpResponseMessage(HttpStatusCode.Moved);
+                        _configuration.CreateConnectionString(serverConfiguration);
+                        
+                        response = new HttpResponseMessage(HttpStatusCode.OK);
                         response.Headers.Location = new Uri(Request.RequestUri.Authority + "/?install=2");                        
                     } else
                         response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
                     break;               
                 case ConnectionStringState.Present:
-                    response = new HttpResponseMessage(HttpStatusCode.Moved);
+                    response = new HttpResponseMessage(HttpStatusCode.OK);
                     response.Headers.Location = new Uri(Request.RequestUri.Authority + "/?install=0");
                     break;
                 case ConnectionStringState.Invalid:
@@ -55,7 +56,7 @@ namespace filth.controllers
             if (ModelState.IsValid)
             {
                 _configuration.CreateDatabase(blog);
-                var response = new HttpResponseMessage(HttpStatusCode.Moved);
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
 
                 response.Headers.Location = new Uri(Request.RequestUri.Authority + "/?install=3");
                 return response;
@@ -76,7 +77,7 @@ namespace filth.controllers
                 else
                     throw new Exception("It seems that you've already registred master user for this instance.");
 
-                var response = new HttpResponseMessage(HttpStatusCode.Moved);
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
 
                 response.Headers.Location = new Uri(Request.RequestUri.Authority + "/?install=4");
                 return response;

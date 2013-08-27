@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    //var conf = new configuration();
+    
     var live = $("#Live");
     var formElements = $("form :text, form :password");
 
@@ -9,7 +9,7 @@
         $(e).removeAttr('disabled');
     });
 
-    $('#submit-server-configuration').click(function () { configuration.make("Install","Server") });
+    $('#submit-server-configuration').click(function () { configuration.make("Install", "Server") });
     $('#submit-blog-configuration').click(function () { configuration.make("Install", "Blog") });
     $('#submit-user-configuration').click(function () { configuration.make("Install", "FirstUser") });
     $('#submit-user-login').click(function () { configuration.make("Auth", "Login") });

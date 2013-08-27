@@ -25,9 +25,9 @@ namespace filth.controllers
         [HttpGet]
         public ActionResult Index(int? install)
         {
-            ConnectionStringState state = _configuration.CheckConnection();
+            //ConnectionStringState state = _configuration.CheckConnection();
             IFilthConfiguration la = new FilthConfiguration();
-            //ConnectionStringState state = la.CheckConnection();
+            ConnectionStringState state = la.CheckConnection();
 
             if (state == ConnectionStringState.Present || state == ConnectionStringState.Invalid)
                 if (install == 2)
@@ -42,23 +42,6 @@ namespace filth.controllers
             {
                 return View("Install-ServerConfiguration");
             }
-
-
-            
-
-
-
-
-            // TODO: da provjeri odredjeni unos u memoriji (ako je aplikacija aktivna) ili u web.configu (ako je startovana)
-            /*
-            if (state == "Okay")
-                return View();
-            else
-            {
-                ViewBag.Exception = sqlCon;
-                return View("Install-ServerConfiguration");
-            }
-             */
         }
     } 
 }

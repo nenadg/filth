@@ -134,8 +134,7 @@
     <Content Include="Global.asax" />
     <Content Include="static\css\bootstrap.min.css" />
     <Content Include="static\css\install.css" />
-    <Content Include="static\img\background-install.png" />
-    <Content Include="static\img\pluslogo.png" />
+    <Content Include="static\img\wait.gif" />
     <Content Include="static\js\bootstrap.min.js" />
     <Content Include="static\js\configuration.js" />
     <Content Include="static\js\install.js" />
@@ -158,9 +157,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="views\Home\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="views\Home\Install.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="views\Shared\_Install.cshtml" />

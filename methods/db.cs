@@ -15,7 +15,7 @@ namespace filth.methods
     public interface IFilthConfiguration
     {
         ConnectionStringState CheckConnection();
-        void CreateConnectionString(bool live, string server, string database, string username, string password, string configfilepath);
+        void CreateConnectionString(ServerConfiguration serverConfiguration);
         void RemoveConnectionString();
         void CreateDatabase(Blog context);
         void CreateUser(User user, Role role);
@@ -52,24 +52,25 @@ namespace filth.methods
         }
 
         // TODO : ubaciti provajdere za druge baze
-        public void CreateConnectionString(bool live, string server, string database, string username, string password, string configfilepath)
+        public void CreateConnectionString(ServerConfiguration serverConfiguration)
         {
-            Configuration config = WebConfigurationManager.OpenWebConfiguration(configfilepath);
+            Configuration config = WebConfigurationManager.OpenWebConfiguration(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
             ConnectionStringSettings connectionstringsets = new ConnectionStringSettings();
             connectionstringsets.Name = "filth1connection";
  
             // create connection string
-            if (live)
+            if (serverConfiguration.Live)
             {
-                connectionstringsets.ConnectionString = "Data Source=" + server + ";Initial Catalog=" + database + ";Integrated Security=false;User ID=" + username + ";Password=" + password + ";multipleactiveresultsets=True;App=EntityFramework;"; //Encrypt=yes
+                connectionstringsets.ConnectionString = "Data Source=" + serverConfiguration.ServerName + ";Initial Catalog=" + serverConfiguration.Catalog + ";Integrated Security=false;User ID=" + serverConfiguration.Username + ";Password=" + serverConfiguration.Password + ";multipleactiveresultsets=True;App=EntityFramework;"; //Encrypt=yes
                 try
                 {
-                    using (var connection = new SqlConnection("Data Source=" + server + ";Integrated Security=false;User ID=" + username + ";Password=" + password + ";multipleactiveresultsets=True;App=EntityFramework;"))
+                    using (var connection = new SqlConnection(connectionstringsets.ConnectionString))
                     {
                         connection.Open();
-                        //var command = connection.CreateCommand();
-                        //command.CommandText = "CREATE DATABASE " + database;
-                        //command.ExecuteNonQuery();
+                        // most hostings doesn't allow this
+                        // var command = connection.CreateCommand();
+                        // command.CommandText = "CREATE DATABASE " + database;
+                        // command.ExecuteNonQuery();
                     }
                 }
                 catch (Exception e)

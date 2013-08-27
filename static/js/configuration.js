@@ -1,4 +1,4 @@
-﻿// configuration proto
+﻿// configuration
 var configuration = (function () {
     var delta = 0;
 
@@ -6,9 +6,12 @@ var configuration = (function () {
     /// @param {String} [controller] name of api controller
     /// @param {String} [action] controller action to invoke
     var make = function (controller, action) {
+
+        $('#wait').html('<img src="/static/img/wait.gif" alt="wait" />');
+
         var form = $('form'),
-            enabled = ($('#Live').prop('checked') !== undefined) ? $('#Live').prop('checked') : true; // lame ...
-        
+            enabled = ($('#Live').prop('checked') !== undefined) ? $('#Live').prop('checked') : true;
+
         // related only to server configuration form thus stupid but hey ...
         var serialized = (enabled) ? form.serializeArray() : { ServerName: "local", Catalog: "local", Username: "local" };
 
@@ -16,37 +19,35 @@ var configuration = (function () {
             type: "POST",
             url: "/api/" + controller + "/" + action,
             data: serialized
-        }).done(function () {
-            // later ...
-
-        }).fail(function (xhr) {
-            
+        }).done(function (data, status, xhr) {
             // server returns location header which
             // replaces Response.Redirect(location)
             var loc = xhr.getResponseHeader("Location");
 
             if (loc !== null) {
-                progress();
                 setTimeout(function () { window.location.href = "http://" + loc; }, 350);
                 $('body').fadeOut(340); // fancy
-            } else {
-
-                // modelStateErros - validation
-                // exceptionMessage - if something goes wrong
-                var modelStateErrors = xhr.responseJSON.ModelState;
-                var exceptionMessage = xhr.responseJSON.ExceptionMessage;
-                
-                if (exceptionMessage !== undefined) {
-                    delta++;
-                    var errorTime = new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds();
-                    
-                    $('.comments.error').append("<p>[" + errorTime + "] " + exceptionMessage + "</p>");
-                    if (delta > 5) $('.comments.error').append("<p><strong>" + messages[Math.floor(Math.random() * messages.length)] + "</strong></p>");
-                }
-
-                if (enabled)
-                    validate(form, modelStateErrors);
             }
+        }).fail(function (xhr) {
+
+            $('#wait').html('');
+            
+            // modelStateErros - validation
+            // exceptionMessage - if something goes wrong
+            var modelStateErrors = xhr.responseJSON.ModelState;
+            var exceptionMessage = xhr.responseJSON.ExceptionMessage;
+
+            if (exceptionMessage !== undefined) {
+                delta++;
+                var errorTime = new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds();
+
+                $('.comments.error').append("<p>[" + errorTime + "] " + exceptionMessage + "</p>");
+                if (delta > 5) $('.comments.error').append("<p><strong>" + messages[Math.floor(Math.random() * messages.length)] + "</strong></p>");
+            }
+
+            if (enabled)
+                validate(form, modelStateErrors);
+
         });
     };
 
@@ -85,12 +86,6 @@ var configuration = (function () {
     // eggs 
     var messages = ['Come on', 'Stop it', 'Much fun having here', 'Crazy...', 'It seems that you have some problem', 'Just die.', 'Maybe you should contact a psychiatrist',
                     'You\'re so wrong','An error in your head occured', 'Bullshit bingo', 'Weeee...', 'Off with your head'];
-
-    // display simple progress as we move on
-    function progress() {
-        var full = $(window).width();
-         $('.progress').animate({ width: full }, 290);   
-    }
 
     return {
         make: make,

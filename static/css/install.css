@@ -4,4 +4,5 @@
 .error { color: red; }
 .field-validation-error { padding: 0px; margin:0px; color: red; display: inline; }
 .input-validation-error { border-color: red; background-color: #fcfcfc; }
-.progress { position: absolute; left: 0; top: 0; color: red; height: 5px; }
+
+#wait { margin-left: 10px; }
