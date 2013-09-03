@@ -25,9 +25,7 @@ namespace filth.controllers
         [HttpGet]
         public ActionResult Index(int? install)
         {
-            //ConnectionStringState state = _configuration.CheckConnection();
-            IFilthConfiguration la = new FilthConfiguration();
-            ConnectionStringState state = la.CheckConnection();
+            var state = _configuration.CheckConnection();
 
             if (state == ConnectionStringState.Present || state == ConnectionStringState.Invalid)
                 if (install == 2)
@@ -42,6 +40,12 @@ namespace filth.controllers
             {
                 return View("Install-ServerConfiguration");
             }
+        }
+
+        [HttpGet]
+        public ActionResult Profile()
+        {
+            return View();
         }
     } 
 }

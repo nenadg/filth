@@ -66,11 +66,26 @@ namespace filth.models
 
         public virtual ICollection<User> Users { get; set; }
 
-        // still we must instantiate 
         public Role()
         {
             Users = new List<User>();
         }
+    }
+
+    public class Profile
+    {
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Enter your name or whatever you like.")]
+        [Display(Name = "Name (eg. John Smith)")]
+        public string Name { get; set; }
+
+        [Display(Name = "Tell me something about you...")]
+        public string Overview { get; set; }
+
+        public Byte[] Image { get; set; }
+
+        public virtual User User { get; set; }
     }
 
 }

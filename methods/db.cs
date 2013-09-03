@@ -119,6 +119,13 @@ namespace filth.methods
                     db.Users.Attach(user);
 
                     db.Roles.FirstOrDefault(u => u.Name == role.Name).Users.Add(user);
+
+                    Profile profile = new Profile();
+                    profile.Name = db.Blogs.FirstOrDefault().Name;
+                    profile.User = user;
+
+                    db.Profiles.Add(profile);
+
                     db.SaveChanges();
                 }
                 else
