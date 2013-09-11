@@ -95,10 +95,10 @@ namespace filth.models
     {
         public int Id { get; set; }
 
-         [Display(Name = "File name")]
+        [Display(Name = "File name")]
         public string Name { get; set; }
 
-         [Display(Name = "File description")]
+        [Display(Name = "File description")]
         public string Description { get; set; }
         public string MimeType { get; set; }
         public Byte[] Bytes { get; set; }

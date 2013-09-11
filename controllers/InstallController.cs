@@ -12,25 +12,28 @@ namespace filth.controllers
 { 
     public class InstallController : ApiController
     {
-        private IFilthConfiguration _configuration;
         
-        public InstallController() : this(new FilthConfiguration()) { }
-        public InstallController(IFilthConfiguration _iconfiguration)
+        private ISetup setup;
+
+        public InstallController() : this(new Setup()) { }
+        public InstallController(ISetup _setup)
         {
-            _configuration = _iconfiguration;
-        }
+            setup = _setup;
+        }    
 
         public HttpResponseMessage Server(ServerConfiguration serverConfiguration)
         {
-            ConnectionStringState state = _configuration.CheckConnection();
+            FilthConfiguration configuration = new FilthConfiguration();
+
+            ConnectionStringState state = configuration.CheckConnection();
             var response = new HttpResponseMessage();
-            
-            switch (_configuration.CheckConnection())
+
+            switch (configuration.CheckConnection())
             {
                 case ConnectionStringState.Absent:
                     if (ModelState.IsValid)
                     {
-                        _configuration.CreateConnectionString(serverConfiguration);
+                        configuration.CreateConnectionString(serverConfiguration);
                         
                         response = new HttpResponseMessage(HttpStatusCode.OK);
                         response.Headers.Location = new Uri(Request.RequestUri.Authority + "/?install=2");                        
@@ -55,7 +58,8 @@ namespace filth.controllers
         {
             if (ModelState.IsValid)
             {
-                _configuration.CreateDatabase(blog);
+                setup.CreateBlog(blog);
+
                 var response = new HttpResponseMessage(HttpStatusCode.OK);
 
                 response.Headers.Location = new Uri(Request.RequestUri.Authority + "/?install=3");
@@ -68,14 +72,14 @@ namespace filth.controllers
         [HttpPost]
         public HttpResponseMessage FirstUser(User user)
         {
+           
+            
             if (ModelState.IsValid)
             {
                 // this is all hard coded for now
                 Role master = new Role(){ Name = "Masters" };
-                if(!_configuration.DoWeHaveAnyUsers())
-                    _configuration.CreateUser(user, master);
-                else
-                    throw new Exception("It seems that you've already registred master user for this instance.");
+
+                setup.CreateUser(user, master);
 
                 var response = new HttpResponseMessage(HttpStatusCode.OK);
 
@@ -85,5 +89,13 @@ namespace filth.controllers
             else
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
         }
+
+        
+        protected override void Dispose(bool disposing)
+        {
+            setup.Dispose();
+            base.Dispose(disposing);
+        }
+         
     }
 }

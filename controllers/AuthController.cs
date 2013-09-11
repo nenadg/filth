@@ -12,12 +12,12 @@ namespace filth.controllers
 {
     public class AuthController : ApiController
     {
-        private IFilthConfiguration _configuration;
-        
-        public AuthController() : this(new FilthConfiguration()) { }
-        public AuthController(IFilthConfiguration _iconfiguration)
+        private ISetup setup;
+
+        public AuthController() : this(new Setup()) { }
+        public AuthController(ISetup _setup)
         {
-            _configuration = _iconfiguration;
+            setup = _setup;
         }
 
         [HttpPost]
@@ -27,7 +27,7 @@ namespace filth.controllers
             
             if (ModelState.IsValid)
             {
-                if (_configuration.ValidateLogin(user))
+                if (setup.ValidateLogin(user))
                 {
                     string chunk = String.Format("#{0:X6}", new Random().Next(0x1000000)) + "." + new Random().Next();
                     System.Net.Http.Headers.CookieHeaderValue val = new System.Net.Http.Headers.CookieHeaderValue("FilthSession", chunk);
@@ -45,6 +45,12 @@ namespace filth.controllers
                 response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
 
             return response;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            setup.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

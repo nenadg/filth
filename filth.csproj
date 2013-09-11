@@ -117,14 +117,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="controllers\AuthController.cs" />
-    <Compile Include="controllers\InstallController.cs" />
-    <Compile Include="controllers\HomeController.cs" />
+    <Compile Include="controllers\AuthController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="controllers\HomeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="controllers\InstallController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="methods\db.cs" />
-    <Compile Include="methods\ModelValidationFilter.cs" />
+    <Compile Include="methods\FilthConfiguration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="methods\ModelValidationFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="methods\Repositories.cs" />
     <Compile Include="models\Model.cs" />
     <Compile Include="models\System.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

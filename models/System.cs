@@ -63,7 +63,7 @@ namespace filth.models
         [Required(ErrorMessage = "You can't have role named <blank>.")]
         [Display(Name = "Role name")]
         public string Name { get; set; }
-
+        
         public virtual ICollection<User> Users { get; set; }
 
         public Role()
@@ -87,5 +87,6 @@ namespace filth.models
 
         public virtual User User { get; set; }
     }
+
 
 }

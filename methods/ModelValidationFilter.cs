@@ -13,7 +13,6 @@ namespace filth.filters
     /// </summary>
     public class ModelValidationFilter : ActionFilterAttribute
     {
-        
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             
@@ -22,27 +21,6 @@ namespace filth.filters
                 actionContext.Response = actionContext.Request.CreateErrorResponse(
                     HttpStatusCode.BadRequest, actionContext.ModelState);
             }
-        }
-         
-
-        /*
-        public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
-        {
-            var modelState = actionExecutedContext.ActionContext.ModelState;
-            if (!modelState.IsValid)
-            {
-                var errors = modelState
-                    .Where(s => s.Value.Errors.Count > 0)
-                    .Select(s => new KeyValuePair<string, string>(s.Key, s.Value.Errors.First().ErrorMessage))
-                    .ToArray();
-
-                actionExecutedContext.Response = actionExecutedContext.Request.CreateResponse<KeyValuePair<string, string>[]>(
-                    HttpStatusCode.BadRequest,
-                    errors
-                );
-            }
-            base.OnActionExecuted(actionExecutedContext);
-        }
-         */
+        } 
     }
 }
