@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
@@ -33,6 +34,9 @@ namespace filth.methods
         void CreateUser(User user, Role role);
 
         bool ValidateLogin(User user);
+        string GenerateSessionKey(string username, string key, string useragent, string ip);
+        User ValidateUser(string key);
+        void RemoveSessionKey(string key);
     }
 
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
@@ -205,6 +209,56 @@ namespace filth.methods
             }
             else
                 return false;
+
+        }
+
+        public string GenerateSessionKey(string username, string key, string useragent, string ip)
+        {
+            // randomly generated key will be hashed with user's current password's salt
+            User user = context.Users.FirstOrDefault(u => u.Username == username);
+
+            if (user.Sessions.Any(u => u.UserAgent == useragent && u.IP == ip && u.Key != null && u.Authorised))
+            {
+                return null;
+            }
+            else
+            {
+                string salt = user.Salt;
+
+                string encrypted = BCryptHelper.HashPassword(key, salt).Remove(0, salt.Length);
+
+                Session session = new Session() { Key = encrypted, User = user, Authorised = true, IP = ip, UserAgent = useragent };
+                context.Sessions.Add(session);
+                context.SaveChanges();
+
+                context.Entry(user).State = EntityState.Modified;
+                context.Users.Attach(user);
+                user.Sessions.Add(session);
+
+                context.SaveChanges();
+
+                return encrypted;
+            }
+        }
+
+        public User ValidateUser(string key)
+        {
+            Session session = context.Sessions.FirstOrDefault(s => s.Key == key);
+            if (session != null && session.Authorised)
+                return session.User;
+
+            return null;
+        }
+
+        public void RemoveSessionKey(string key)
+        {
+            Session session = context.Sessions.FirstOrDefault(s => s.Key == key);
+            
+            context.Entry(session).State = EntityState.Modified;
+            context.Sessions.Attach(session);
+            session.Authorised = false; 
+
+            context.SaveChanges();
 
         }
 

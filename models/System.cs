@@ -53,7 +53,21 @@ namespace filth.models
         public string Salt { get; set; }
 
         public virtual ICollection<Role> Roles { get; set; }
+        public virtual ICollection<Session> Sessions { get; set; }
         
+    }
+
+    public class Session
+    {
+        public int Id { get; set; }
+        public string Key { get; set; }
+        public bool Authorised { get; set; }
+        public string UserAgent { get; set; }
+        public string IP { get; set; }
+        public Nullable<DateTime> MaxAge { get; set; }
+
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
     }
 
     public class Role

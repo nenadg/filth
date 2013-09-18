@@ -9,7 +9,7 @@ using filth.models;
 using filth.methods;
 
 namespace filth.controllers
-{ 
+{
     public class InstallController : ApiController
     {
         

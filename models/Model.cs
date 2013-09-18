@@ -141,7 +141,6 @@ namespace filth.models
         public virtual Article Article { get; set; }
     }
 
-
     public class BlogContext : DbContext
     {
         public DbSet<Culture> Cultures { get; set; }
@@ -151,6 +150,7 @@ namespace filth.models
         public DbSet<Comment> Comments { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Session> Sessions { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Profile> Profiles { get; set; }
 
@@ -206,6 +206,7 @@ namespace filth.models
                 .HasOptional(u => u.User)
                 .WithOptionalDependent().Map(m=>m.MapKey("UserId"))
                 .WillCascadeOnDelete(true);
+
            
         }
         

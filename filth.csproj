@@ -126,8 +126,12 @@
     <Compile Include="controllers\InstallController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="controllers\ProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="methods\Authorization.cs">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="methods\FilthConfiguration.cs">
       <SubType>Code</SubType>
@@ -188,6 +192,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="views\Shared\_Default.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="views\Profile\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
