@@ -55,12 +55,13 @@ namespace filth.methods
                         new RouteValueDictionary(
                             new
                             {
-                                controller = "Error",
-                                action = "Unauthorised"
+                                controller = "errors",
+                                action = "unauthorised"
                                 
                             })
                         );
         }
 
     }
+
 }

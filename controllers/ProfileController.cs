@@ -24,7 +24,6 @@ namespace filth.controllers
         public ActionResult Index()
         {
             return View();
-
         }
 
     }

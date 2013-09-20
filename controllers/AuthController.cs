@@ -7,7 +7,6 @@ using System.Web.Http;
 using filth.models;
 using filth.methods;
 
-
 namespace filth.controllers
 {
     public class AuthController : ApiController
@@ -22,7 +21,7 @@ namespace filth.controllers
 
         [HttpPost]
         public HttpResponseMessage Login(User user)
-        {
+        { 
             var response = new HttpResponseMessage();
             
             if (ModelState.IsValid)
@@ -33,35 +32,30 @@ namespace filth.controllers
                     var context = Request.Properties["MS_HttpContext"] as System.Web.HttpContextWrapper;
                     string useragent = context.Request.UserAgent;
                     string ip = context.Request.UserHostAddress;
-               
+
                     Random rand = new Random();
+                    Session session = new Session() { User = user, Authorised = true, IP = ip, UserAgent = useragent };
 
                     // here we'll generate some random color every time user logs in
                     // for the random value of the cookie
                     string color = String.Format("{0:X6}", rand.Next(0x1000000));
-                    string secret = setup.GenerateSessionKey(user.Username, color, useragent, ip);
+                    string secret = setup.GenerateSessionKey(session, color);
 
-                    response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response = new HttpResponseMessage(HttpStatusCode.OK);               
                     response.Headers.Location = new Uri(Request.RequestUri.Authority + "/profile/index/" + user.Username);
-
+                    
                     if (secret != null)
                     {
                         System.Net.Http.Headers.CookieHeaderValue cookie = new System.Net.Http.Headers.CookieHeaderValue("filth.sid", secret);
 
-                        // --- stupid part ends here ---
-
-                        // in case of 'remember me' ...
-                        // int MINUTES = whatever ...
-                        // cookie.Expires = DateTimeOffset.Now + TimeSpan.FromMinutes(-MINUTES);
-                        // cookie.MaxAge = TimeSpan.FromMinutes(MINUTES);
-
-                        cookie.Domain = Request.RequestUri.Host;
+                        // for some strange reason IE won't accept cookies containing Domain attribute ?!
+                        //cookie.Domain = Request.RequestUri.Host;
                         cookie.Path = "/";
                         cookie.HttpOnly = true; // prevents JavaScript-based cookie theft
-
+ 
                         response.Headers.AddCookies(new System.Net.Http.Headers.CookieHeaderValue[] { cookie });
                     }
-
+                    // --- stupid part ends here ---
                 } else
                     response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, new Exception("Nope. Either you entered invalid combination or credentials doesn't exist."));
             }

@@ -30,4 +30,5 @@
     // pa prilikom slanja forme server dobija dodatno polje koje ne odgovara modelu, pa vraca Bad request.
     // Treba ga izbaciti iz DOM-a i ljepota...
     $("input[name=Live]:hidden").remove();
+    $("input[name=Remember]:hidden").remove();
 });

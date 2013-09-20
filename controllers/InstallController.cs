@@ -12,7 +12,6 @@ namespace filth.controllers
 {
     public class InstallController : ApiController
     {
-        
         private ISetup setup;
 
         public InstallController() : this(new Setup()) { }

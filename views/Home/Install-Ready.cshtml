@@ -30,9 +30,12 @@
                 @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Password)
             </div>
+            <div class="editor-label">
+                @Html.CheckBoxFor(model=> model.Remember)
+                @Html.LabelFor(model => model.Remember)               
+            </div>
             <br />
-            <p class="help-block comments">And no, there is no 'remember me' checkbox, you're logged in by default, until you log out.</p>
-
+            <p class="help-block comments">If you don't select 'Remember me' your session will last until you close your browser.</p>
             <div class="editor-label">
                 <br />
                 <input type="button" value="Login" class="btn btn-success" id="submit-user-login" /><span id="wait"></span>

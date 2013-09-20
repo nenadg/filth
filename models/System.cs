@@ -45,11 +45,13 @@ namespace filth.models
         [Required(ErrorMessage = "You must specify your favourite user name.")]
         [Display(Name = "Username")]
         public string Username { get; set; }
-
+        
         [Required(ErrorMessage = "Enter your password.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Display(Name = "Remember me on this device.")] 
+        public bool Remember { get; set; }
         public string Salt { get; set; }
 
         public virtual ICollection<Role> Roles { get; set; }
@@ -64,7 +66,7 @@ namespace filth.models
         public bool Authorised { get; set; }
         public string UserAgent { get; set; }
         public string IP { get; set; }
-        public Nullable<DateTime> MaxAge { get; set; }
+        public Nullable<DateTime> Expires { get; set; }
 
         public int UserId { get; set; }
         public virtual User User { get; set; }

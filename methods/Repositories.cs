@@ -34,7 +34,7 @@ namespace filth.methods
         void CreateUser(User user, Role role);
 
         bool ValidateLogin(User user);
-        string GenerateSessionKey(string username, string key, string useragent, string ip);
+        string GenerateSessionKey(Session session, string key);//string username, string key, string useragent, string ip);
         User ValidateUser(string key);
         void RemoveSessionKey(string key);
     }
@@ -212,22 +212,27 @@ namespace filth.methods
 
         }
 
-        public string GenerateSessionKey(string username, string key, string useragent, string ip)
+        // Ovde ubaciti Session za atribut umjesto ovih zajebancija ...
+        public string GenerateSessionKey(Session session, string key)//string username, string key, string useragent, string ip, Datet)
         {
             // randomly generated key will be hashed with user's current password's salt
-            User user = context.Users.FirstOrDefault(u => u.Username == username);
+            User user = context.Users.FirstOrDefault(u => u.Username == session.User.Username);
 
-            if (user.Sessions.Any(u => u.UserAgent == useragent && u.IP == ip && u.Key != null && u.Authorised))
+            if (user.Sessions.Any(u => u.UserAgent == session.UserAgent && u.IP == session.IP && u.Key != null && u.Authorised))
             {
                 return null;
             }
             else
             {
                 string salt = user.Salt;
-
                 string encrypted = BCryptHelper.HashPassword(key, salt).Remove(0, salt.Length);
 
-                Session session = new Session() { Key = encrypted, User = user, Authorised = true, IP = ip, UserAgent = useragent };
+                if (session.User.Remember)
+                    session.Expires = DateTime.Now.AddMonths(12);
+
+                session.User = user;
+                session.Key = encrypted;
+
                 context.Sessions.Add(session);
                 context.SaveChanges();
 

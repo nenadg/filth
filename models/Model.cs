@@ -171,6 +171,8 @@ namespace filth.models
                     
                 });
 
+            modelBuilder.Entity<User>().Ignore(u => u.Remember); 
+
             modelBuilder.Entity<Culture>()
                  .HasMany(b => b.Blogs)
                  .WithMany(c => c.Cultures)

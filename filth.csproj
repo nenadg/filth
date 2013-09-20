@@ -120,6 +120,7 @@
     <Compile Include="controllers\AuthController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="controllers\ErrorsController.cs" />
     <Compile Include="controllers\HomeController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -130,13 +131,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="methods\Authorization.cs">
+    <Compile Include="methods\Attributes.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="methods\FilthConfiguration.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="methods\ModelValidationFilter.cs">
+    <Compile Include="methods\Filters.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="methods\Repositories.cs" />
@@ -155,6 +156,9 @@
     <Content Include="static\js\bootstrap.min.js" />
     <Content Include="static\js\configuration.js" />
     <Content Include="static\js\install.js" />
+    <Content Include="w3c\FilthyPolicy.html" />
+    <Content Include="w3c\FilthyPolicy.xml" />
+    <Content Include="w3c\p3p.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -198,6 +202,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="views\Profile\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="views\Shared\_Error.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="views\Errors\Unauthorised.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
