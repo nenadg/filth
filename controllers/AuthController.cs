@@ -47,9 +47,19 @@ namespace filth.controllers
                     if (secret != null)
                     {
                         System.Net.Http.Headers.CookieHeaderValue cookie = new System.Net.Http.Headers.CookieHeaderValue("filth.sid", secret);
+                      
+                        // in case of 'remember me' ...
+                        if (user.Remember)
+                        {
+                            cookie.Expires = DateTime.Now.AddMonths(12);
+                        }
 
-                        // for some strange reason IE won't accept cookies containing Domain attribute ?!
-                        //cookie.Domain = Request.RequestUri.Host;
+                        // some browsers (*IE) are sometimes strict about some exotic standards - 
+                        // 'localhost' can't be the name for cookie's domain
+                        // more info at http://curl.haxx.se/rfc/cookie_spec.html
+                        if(!Request.RequestUri.Host.Contains("localhost"))
+                            cookie.Domain = Request.RequestUri.Host;
+
                         cookie.Path = "/";
                         cookie.HttpOnly = true; // prevents JavaScript-based cookie theft
  
@@ -62,6 +72,13 @@ namespace filth.controllers
             else
                 response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
 
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage Logout(User user)
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
             return response;
         }
 
